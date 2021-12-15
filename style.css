@@ -14,11 +14,12 @@
   --green: #01ac66;
   --gold: #f79c31;
   --white: #ffffff;
+  --ball: #adc0c4;
 }
 body {
   display: grid;
   grid-template-rows: 60px calc(100vh - 60px);
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 60% 40%;
 }
 /*header*/
 header {
@@ -50,7 +51,7 @@ main {
   margin-top: 20px;
   padding: 15px;
   display: grid;
-  grid-template-rows: 90px 20px 60px 25px 25px 1fr;
+  grid-template-rows: 90px 20px 60px 25px 50px 1fr 80px;
 }
 .titleMain {
   display: inline;
@@ -71,21 +72,47 @@ main > p {
   color: var(--text);
   font-style: italic;
 }
-main > .buttoes {
+
+.bottoes {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.bottoes > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 270px;
+}
+.buttonContainer {
   padding: 15px 0;
   width: 390px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
-.buttonSelectGame {
-  width: 113px;
-  height: 34px;
+.button {
   border-width: 2px;
   border-style: solid;
   border-radius: 15px;
   cursor: pointer;
+}
+.buttonSelectGame {
+  width: 113px;
+  height: 34px;
   font-style: italic;
 }
+.bottoesAction {
+  padding: 20px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .buttonType1 {
   border-color: var(--purple);
   color: var(--purple);
@@ -95,20 +122,35 @@ main > .buttoes {
   background-color: var(--green);
   color: var(--white);
 }
+.buttonType2 > span {
+  margin-right: 10px;
+  font-size: 15px;
+}
 .buttonType3 {
   border-color: var(--gold);
   color: var(--gold);
 }
+.buttonType4 {
+  border-color: var(--green);
+  color: var(--green);
+}
 .containerGames {
-  background-color: violet;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   gap: 5px;
 }
 .containerGames > div {
-  background-color: rgb(209, 221, 184);
+  background-color: var(--ball);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 aside {
   background-color: aqua;
+  display: grid;
+  grid-template-rows: 90px 20px 60px 25px 50px 1fr 80px;
 }
