@@ -83,15 +83,17 @@ main > p {
 
 .containerGames {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  gap: 15px;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+  grid-template-rows: 40px 40px 40px 40px 40px;
+  gap: 5px;
 }
 .containerGames > div {
   background-color: var(--ball);
+  cursor: pointer;
   color: var(--white);
   border-radius: 50%;
   display: flex;
+  font-size: 12px;
   justify-content: center;
   align-items: center;
 }

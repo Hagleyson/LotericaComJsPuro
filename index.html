@@ -31,53 +31,19 @@
       </h1>
       <p>choose a game</p>
       <div class="buttonContainer">
-        <button class="button buttonSelectGame buttonType1">Lotofácil</button>
-        <button class="button buttonSelectGame buttonType2">Mega-Sena</button>
-        <button class="button buttonSelectGame buttonType3">Lotomania</button>
+        <button data-js="lotofacil" class="button buttonSelectGame buttonType1">
+          Lotofácil
+        </button>
+        <button data-js="megasena" class="button buttonSelectGame buttonType2">
+          Mega-Sena
+        </button>
+        <button data-js="lotomania" class="button buttonSelectGame buttonType3">
+          Lotomania
+        </button>
       </div>
       <strong>Fill your bet</strong>
-      <p>
-        Mark as many number as you want up to a maxim of 50, Win by hitting
-        15,16,17,18,19,20
-      </p>
-      <div class="containerGames">
-        <div><h1>15</h1></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <p data-js="desc"></p>
+      <div data-js="numbers" class="containerGames"></div>
       <div class="bottoes">
         <div>
           <button class="button bottoesAction buttonType4">
@@ -143,6 +109,7 @@
       src="https://kit.fontawesome.com/0d1dc0603d.js"
       crossorigin="anonymous"
     ></script>
+    <script src="dom.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
