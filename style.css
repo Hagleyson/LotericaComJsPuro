@@ -230,7 +230,7 @@ aside {
 button:hover {
   transform: scale(1.05);
 }
-.teste {
+.selected {
   background: black !important;
 }
 @media screen and (max-width: 768px) {
