@@ -23,15 +23,16 @@
           app().handleClick(2);
         });
 
-        $('[data-js="clearGame"]').on("click", function () {
-          app().createFieldBet($gameAtual.range);
-          $selectedNumber = [];
-        });
+        $('[data-js="clearGame"]').on("click", app().handleClear);
         $('[data-js="completeGame"]').on("click", app().handleComplete);
         $('[data-js="addToCar"]').on("click", app().handleAddToCar);
       },
       handleClick: function handleClick(type) {
         app().getInfoGame(type);
+        $selectedNumber = [];
+      },
+      handleClear: function handleClear() {
+        app().createFieldBet($gameAtual.range);
         $selectedNumber = [];
       },
       handleAddToCar: function handleAddToCar() {
@@ -68,6 +69,7 @@
         $fragment.appendChild($li);
         $('[data-js="card"]').get()[0].appendChild($fragment);
         $('[data-js="tot"]').get()[0].innerHTML = `TOTAL ${$totalPrice}`;
+        app().handleClear();
       },
       handleRemoveItemCar: function handleRemoveItemCar(element, value) {
         $('[data-js="card"]').get()[0].removeChild(element.parentNode);
