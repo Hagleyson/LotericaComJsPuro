@@ -25,6 +25,7 @@
 
         $('[data-js="clearGame"]').on("click", function () {
           app().createFieldBet($gameAtual.range);
+          $selectedNumber = [];
         });
         $('[data-js="completeGame"]').on("click", app().handleComplete);
         $('[data-js="addToCar"]').on("click", app().handleAddToCar);
@@ -39,7 +40,7 @@
           alert(`Você deve selecionar: ${maxNumber} números`);
           return;
         }
-        $totalPrice.push($gameAtual.price);
+        $totalPrice = Number($totalPrice) + Number($gameAtual.price);
         var $fragment = doc.createDocumentFragment();
         var $li = doc.createElement("li");
         var $button = doc.createElement("button");
@@ -50,6 +51,13 @@
         $button.classList.add("far");
         $button.classList.add("fa-trash-alt");
         $button.classList.add("buttonDefault");
+        $button.addEventListener(
+          "click",
+          function () {
+            app().handleRemoveItemCar(this, $gameAtual.price);
+          },
+          false
+        );
         $p.textContent = $selectedNumber.join(", ");
         $strong.textContent = $gameAtual.type;
         $span.textContent = ` R$ ${$gameAtual.price}`;
@@ -59,8 +67,12 @@
         $li.appendChild($strong);
         $fragment.appendChild($li);
         $('[data-js="card"]').get()[0].appendChild($fragment);
-        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL 
-          ${$totalPrice.reduce((acumulado, p) => (acumulado += p))}`;
+        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL ${$totalPrice}`;
+      },
+      handleRemoveItemCar: function handleRemoveItemCar(element, value) {
+        $('[data-js="card"]').get()[0].removeChild(element.parentNode);
+        $totalPrice -= Number(value);
+        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL ${$totalPrice}`;
       },
       addClass: function () {
         switch ($gameAtual.type) {
