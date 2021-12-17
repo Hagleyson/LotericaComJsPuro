@@ -27,7 +27,7 @@
     <main class="main">
       <h1 class="titleMain">
         NEW BET
-        <span class="teste">FOR MEGA-SENA</span>
+        <span>FOR MEGA-SENA</span>
       </h1>
       <p>choose a game</p>
       <div class="buttonContainer">
@@ -43,13 +43,18 @@
       </div>
       <strong>Fill your bet</strong>
       <p data-js="desc"></p>
-      <div data-js="numbers" class="containerGames"></div>
+      <div data-js="containerGames" class="containerGames"></div>
       <div class="bottoes">
         <div>
-          <button class="button bottoesAction buttonType4">
+          <button
+            data-js="completeGame"
+            class="button bottoesAction buttonType4"
+          >
             Complete Game
           </button>
-          <button class="button bottoesAction buttonType4">Clear game</button>
+          <button data-js="clearGame" class="button bottoesAction buttonType4">
+            Clear game
+          </button>
         </div>
         <button class="button bottoesAction buttonType2">
           <span class="fas fa-shopping-cart"></span> to cart
