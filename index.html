@@ -24,51 +24,65 @@
         <h1 class="linkMenu">Log out -></h1>
       </div>
     </header>
-    <main class="main">
-      <h1 class="titleMain">
-        NEW BET
-        <span>FOR MEGA-SENA</span>
-      </h1>
-      <p>choose a game</p>
-      <div class="buttonContainer">
-        <button data-js="lotofacil" class="button buttonSelectGame buttonType1">
-          Lotofácil
-        </button>
-        <button data-js="megasena" class="button buttonSelectGame buttonType2">
-          Mega-Sena
-        </button>
-        <button data-js="lotomania" class="button buttonSelectGame buttonType3">
-          Lotomania
-        </button>
-      </div>
-      <strong>Fill your bet</strong>
-      <p data-js="desc"></p>
-      <div data-js="containerGames" class="containerGames"></div>
-      <div class="bottoes">
-        <div>
+    <section class="container">
+      <main class="main">
+        <h1 class="titleMain">
+          NEW BET
+          <span>FOR MEGA-SENA</span>
+        </h1>
+        <p>choose a game</p>
+        <div class="buttonContainer">
           <button
-            data-js="completeGame"
-            class="button bottoesAction buttonType4"
+            data-js="lotofacil"
+            class="button buttonSelectGame buttonType1"
           >
-            Complete Game
+            Lotofácil
           </button>
-          <button data-js="clearGame" class="button bottoesAction buttonType4">
-            Clear game
+          <button
+            data-js="megasena"
+            class="button buttonSelectGame buttonType2"
+          >
+            Mega-Sena
+          </button>
+          <button
+            data-js="lotomania"
+            class="button buttonSelectGame buttonType3"
+          >
+            Lotomania
           </button>
         </div>
-        <button data-js="addToCar" class="button bottoesAction buttonType2">
-          <span class="fas fa-shopping-cart"></span> to cart
+        <strong>Fill your bet</strong>
+        <p data-js="desc"></p>
+        <div data-js="containerGames" class="containerGames"></div>
+        <div class="bottoes">
+          <div>
+            <button
+              data-js="completeGame"
+              class="button bottoesAction buttonType4"
+            >
+              Complete Game
+            </button>
+            <button
+              data-js="clearGame"
+              class="button bottoesAction buttonType4"
+            >
+              Clear game
+            </button>
+          </div>
+          <button data-js="addToCar" class="button bottoesAction buttonType2">
+            <span class="fas fa-shopping-cart"></span> to cart
+          </button>
+        </div>
+      </main>
+      <aside>
+        <h1 class="titleMain">Cart</h1>
+        <ul data-js="card" class="card"></ul>
+        <h1 class="titleMain">Cart <span data-js="tot">TOTAl:</span></h1>
+        <button class="buttonDefault save">
+          Save <span class="fas fa-arrow-right"></span>
         </button>
-      </div>
-    </main>
-    <aside>
-      <h1 class="titleMain">Cart</h1>
-      <ul data-js="card" class="card"></ul>
-      <h1 class="titleMain">Cart <span data-js="tot">TOTAl:</span></h1>
-      <button class="buttonDefault save">
-        Save <span class="fas fa-arrow-right"></span>
-      </button>
-    </aside>
+      </aside>
+    </section>
     <script
       src="https://kit.fontawesome.com/0d1dc0603d.js"
       crossorigin="anonymous"
