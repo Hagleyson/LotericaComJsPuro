@@ -1,11 +1,12 @@
 (function ($, doc) {
   "use strict";
-  var $desc = $("[data-js='desc']");
-  var $containerGames = $('[data-js="containerGames"]');
-  var $selectedNumber = [];
-  var $gameInformation = [];
-  var $gameAtual = {};
-  var $totalPrice = [];
+  const $desc = $("[data-js='desc']");
+  const $containerGames = $('[data-js="containerGames"]');
+  const $card = $('[data-js="card"]').get()[0];
+  let $selectedNumber = [];
+  let $gameInformation = [];
+  let $gameAtual = {};
+  let $totalPrice = 0;
 
   function app() {
     return {
@@ -31,11 +32,12 @@
           },
           false
         );
+        $card.appendChild(app().msgCardClear());
       },
       addButoes: function addButoes() {
-        let $fragment = doc.createDocumentFragment();
+        const $fragment = doc.createDocumentFragment();
         $gameInformation.forEach((element) => {
-          let $button = doc.createElement("button");
+          const $button = doc.createElement("button");
           $button.setAttribute("data-js", `${element.type}`);
           $button.classList.add("button");
           $button.classList.add("buttonSelectGame");
@@ -79,14 +81,17 @@
         $('[data-js="addToCar"]').on("click", app().handleAddToCar);
       },
       handleClear: function handleClear() {
-        console.log($gameAtual.range);
         app().createFieldBet($gameAtual.range);
         $selectedNumber = [];
       },
       handleAddToCar: function handleAddToCar() {
         const maxNumber = $gameAtual["max-number"];
+
+        if ($totalPrice === 0) {
+          $card.innerHTML = "";
+        }
         if ($selectedNumber.length < maxNumber) {
-          const total = maxNumber - $selectedNumber.length;
+          let total = maxNumber - $selectedNumber.length;
           $selectedNumber.length === 0
             ? alert(`Você deve selecionar: ${maxNumber} números`)
             : alert(
@@ -97,12 +102,12 @@
           return;
         }
         $totalPrice = Number($totalPrice) + Number($gameAtual.price);
-        var $fragment = doc.createDocumentFragment();
-        var $li = doc.createElement("li");
-        var $button = doc.createElement("button");
-        var $p = doc.createElement("p");
-        var $strong = doc.createElement("strong");
-        var $span = doc.createElement("span");
+        const $fragment = doc.createDocumentFragment();
+        const $li = doc.createElement("li");
+        const $button = doc.createElement("button");
+        const $p = doc.createElement("p");
+        const $strong = doc.createElement("strong");
+        const $span = doc.createElement("span");
         $li.classList.add(app().addClass());
         $button.classList.add("far");
         $button.classList.add("fa-trash-alt");
@@ -116,13 +121,14 @@
         );
         $p.textContent = $selectedNumber.sort((a, b) => a - b).join(", ");
         $strong.textContent = `${$gameAtual.type}`;
-        $span.textContent = $gameAtual.price;
+        $span.textContent = ` ${app().convertReal($gameAtual.price)}`;
         $strong.appendChild($span);
         $li.appendChild($button);
         $li.appendChild($p);
         $li.appendChild($strong);
         $fragment.appendChild($li);
-        $('[data-js="card"]').get()[0].appendChild($fragment);
+
+        $card.appendChild($fragment);
         $('[data-js="tot"]').get()[0].innerHTML = `TOTAL: ${app().convertReal(
           $totalPrice
         )}`;
@@ -135,12 +141,30 @@
         });
       },
       handleRemoveItemCar: function handleRemoveItemCar(element) {
-        $('[data-js="card"]').get()[0].removeChild(element.parentNode);
-        var value = element.parentNode.lastChild.lastChild.innerHTML;
-        $totalPrice = Number($totalPrice) - Number(value);
-        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL: ${$totalPrice}`;
-      },
+        $card.removeChild(element.parentNode);
 
+        let value = Number(
+          element.parentNode.lastChild.lastChild.innerHTML
+            .match(/\d+,\d+/gm)
+            .join()
+            .replace(",", ".")
+        );
+        $totalPrice = Number($totalPrice) - Number(value);
+        if ($totalPrice <= 0) {
+          $card.appendChild(app().msgCardClear());
+        }
+        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL: ${app().convertReal(
+          $totalPrice
+        )}`;
+      },
+      msgCardClear: function msgCardClear() {
+        $card.innerHTML = "";
+        const $li = doc.createElement("li");
+        const $h1 = doc.createElement("h1");
+        $h1.textContent = "Carrinho Vazio!!!";
+        $li.appendChild($h1);
+        return $li;
+      },
       addClass: function () {
         switch ($gameAtual.type) {
           case "Lotofácil":
@@ -154,9 +178,9 @@
         }
       },
       createFieldBet: function createFieldBet(range) {
-        var $fragment = doc.createDocumentFragment();
+        const $fragment = doc.createDocumentFragment();
         for (let index = 1; index <= range; index++) {
-          var $div = doc.createElement("div");
+          const $div = doc.createElement("div");
           $div.textContent = index < 10 ? `0${index}` : index;
 
           $div.setAttribute("data-js", "ball");
@@ -202,7 +226,7 @@
         app().applySelectedStyle();
       },
       applySelectedStyle: function applySelectedStyle() {
-        var balls = $('[data-js="ball"]');
+        const balls = $('[data-js="ball"]');
         balls.forEach(function (b) {
           if ($selectedNumber.some((number) => +number === +b.innerHTML)) {
             b.classList.add("selected");

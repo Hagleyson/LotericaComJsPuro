@@ -121,12 +121,17 @@ aside {
   max-height: 500px;
   overflow: auto;
 }
+
 .card > li {
   display: grid;
   grid-template-columns: 50px 1fr;
   grid-template-rows: 1fr 1fr;
   height: 70px;
   padding: 10px 0px;
+}
+.card > li > h1 {
+  font-weight: 500;
+  color: var(--text);
 }
 .card > li > button {
   font-size: 30px;
@@ -222,34 +227,18 @@ aside {
 }
 
 .buttonType1 {
-  border-color: var(--purple);
-  color: var(--purple);
-}
-.type1Selected {
-  background-color: var(--purple);
-  color: var(--white);
-}
-.buttonType2 {
   border-color: var(--green);
-  color: var(--green);
-}
-.type2Selected {
   background-color: var(--green);
   color: var(--white);
+  display: flex;
 }
+
 .buttonType2 > span {
   margin-right: 10px;
   font-size: 15px;
 }
-.buttonType3 {
-  border-color: var(--gold);
-  color: var(--gold);
-}
-.type3Selected {
-  background-color: var(--gold);
-  color: var(--white);
-}
-.buttonType4 {
+
+.buttonType2 {
   border-color: var(--green);
   color: var(--green);
 }
