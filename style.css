@@ -225,8 +225,15 @@ aside {
   border-color: var(--purple);
   color: var(--purple);
 }
+.type1Selected {
+  background-color: var(--purple);
+  color: var(--white);
+}
 .buttonType2 {
   border-color: var(--green);
+  color: var(--green);
+}
+.type2Selected {
   background-color: var(--green);
   color: var(--white);
 }
@@ -237,6 +244,10 @@ aside {
 .buttonType3 {
   border-color: var(--gold);
   color: var(--gold);
+}
+.type3Selected {
+  background-color: var(--gold);
+  color: var(--white);
 }
 .buttonType4 {
   border-color: var(--green);

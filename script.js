@@ -3,42 +3,97 @@
   var $desc = $("[data-js='desc']");
   var $containerGames = $('[data-js="containerGames"]');
   var $selectedNumber = [];
+  var $gameInformation = [];
   var $gameAtual = {};
   var $totalPrice = [];
 
   function app() {
     return {
       init: function init() {
-        this.getInfoGame(0);
+        this.getInfoGame();
         this.initEvents();
       },
+      getInfoGame: function getInfoGame(type) {
+        const ajax = new XMLHttpRequest();
+        ajax.open("GET", "games.json");
+        ajax.send();
+        ajax.addEventListener(
+          "readystatechange",
+          function () {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+              const response = JSON.parse(ajax.responseText);
+              $gameInformation = response.types;
+              $gameAtual = $gameInformation[0];
+              app().createFieldBet($gameAtual.range);
+              app().addDescAndTypeGame();
+            }
+            app().addButoes();
+          },
+          false
+        );
+      },
+      addButoes: function addButoes() {
+        let $fragment = doc.createDocumentFragment();
+        $gameInformation.forEach((element) => {
+          let $button = doc.createElement("button");
+          $button.setAttribute("data-js", `${element.type}`);
+          $button.classList.add("button");
+          $button.classList.add("buttonSelectGame");
+          $button.style.border = `2px solid ${element.color}`;
+          if ($gameAtual.type === element.type) {
+            $button.style.backgroundColor = element.color;
+            $button.style.color = "#fff";
+          } else {
+            $button.style.color = element.color;
+          }
+          $button.textContent = element.type;
+          $button.addEventListener(
+            "click",
+            function () {
+              $gameInformation.forEach((element) => {
+                if (element.type === this.getAttribute("data-js")) {
+                  $gameAtual = element;
+                  app().addButoes();
+                  app().createFieldBet(element.range);
+                  $selectedNumber = [];
+                  app().addDescAndTypeGame();
+                }
+              });
+            },
+            false
+          );
+          $fragment.appendChild($button);
+        });
+        $('[data-js="groupButtons"]').get()[0].innerHTML = "";
+        $('[data-js="groupButtons"]').get()[0].appendChild($fragment);
+      },
+      addDescAndTypeGame: function addDescAndTypeGame() {
+        $desc.get()[0].innerHTML = $gameAtual.description;
+        $(
+          '[data-js="titleGame"]'
+        ).get()[0].innerHTML = `FOR ${$gameAtual.type.toUpperCase()}`;
+      },
       initEvents: function initEvents() {
-        $('[data-js="lotofacil"]').on("click", function () {
-          app().handleClick(0);
-        });
-        $('[data-js="megasena"]').on("click", function () {
-          app().handleClick(1);
-        });
-        $('[data-js="lotomania"]').on("click", function () {
-          app().handleClick(2);
-        });
-
         $('[data-js="clearGame"]').on("click", app().handleClear);
         $('[data-js="completeGame"]').on("click", app().handleComplete);
         $('[data-js="addToCar"]').on("click", app().handleAddToCar);
       },
-      handleClick: function handleClick(type) {
-        app().getInfoGame(type);
-        $selectedNumber = [];
-      },
       handleClear: function handleClear() {
+        console.log($gameAtual.range);
         app().createFieldBet($gameAtual.range);
         $selectedNumber = [];
       },
       handleAddToCar: function handleAddToCar() {
-        var maxNumber = $gameAtual["max-number"];
+        const maxNumber = $gameAtual["max-number"];
         if ($selectedNumber.length < maxNumber) {
-          alert(`Você deve selecionar: ${maxNumber} números`);
+          const total = maxNumber - $selectedNumber.length;
+          $selectedNumber.length === 0
+            ? alert(`Você deve selecionar: ${maxNumber} números`)
+            : alert(
+                `Você deve selecionar mais ${total} ${
+                  total === 1 ? "número" : "números"
+                }.`
+              );
           return;
         }
         $totalPrice = Number($totalPrice) + Number($gameAtual.price);
@@ -55,27 +110,37 @@
         $button.addEventListener(
           "click",
           function () {
-            app().handleRemoveItemCar(this, $gameAtual.price);
+            app().handleRemoveItemCar(this);
           },
           false
         );
-        $p.textContent = $selectedNumber.join(", ");
-        $strong.textContent = $gameAtual.type;
-        $span.textContent = ` R$ ${$gameAtual.price}`;
+        $p.textContent = $selectedNumber.sort((a, b) => a - b).join(", ");
+        $strong.textContent = `${$gameAtual.type}`;
+        $span.textContent = $gameAtual.price;
         $strong.appendChild($span);
         $li.appendChild($button);
         $li.appendChild($p);
         $li.appendChild($strong);
         $fragment.appendChild($li);
         $('[data-js="card"]').get()[0].appendChild($fragment);
-        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL ${$totalPrice}`;
+        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL: ${app().convertReal(
+          $totalPrice
+        )}`;
         app().handleClear();
       },
-      handleRemoveItemCar: function handleRemoveItemCar(element, value) {
-        $('[data-js="card"]').get()[0].removeChild(element.parentNode);
-        $totalPrice -= Number(value);
-        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL ${$totalPrice}`;
+      convertReal: function convertReal(value) {
+        return value.toLocaleString("pt-br", {
+          style: "currency",
+          currency: "BRL",
+        });
       },
+      handleRemoveItemCar: function handleRemoveItemCar(element) {
+        $('[data-js="card"]').get()[0].removeChild(element.parentNode);
+        var value = element.parentNode.lastChild.lastChild.innerHTML;
+        $totalPrice = Number($totalPrice) - Number(value);
+        $('[data-js="tot"]').get()[0].innerHTML = `TOTAL: ${$totalPrice}`;
+      },
+
       addClass: function () {
         switch ($gameAtual.type) {
           case "Lotofácil":
@@ -90,10 +155,10 @@
       },
       createFieldBet: function createFieldBet(range) {
         var $fragment = doc.createDocumentFragment();
-        for (let index = 0; index <= range; index++) {
+        for (let index = 1; index <= range; index++) {
           var $div = doc.createElement("div");
-          $div.textContent = index;
-          $div.textContent = index;
+          $div.textContent = index < 10 ? `0${index}` : index;
+
           $div.setAttribute("data-js", "ball");
           $div.addEventListener(
             "click",
@@ -112,6 +177,8 @@
               if ($selectedNumber.length < $gameAtual["max-number"]) {
                 $selectedNumber.push(+numberSelected);
                 this.classList.add("selected");
+              } else {
+                alert("Não é possível adicionar um novo número ao game");
               }
             },
             false
@@ -127,7 +194,7 @@
           $selectedNumber.length < $gameAtual["max-number"];
           index++
         ) {
-          var aleatorio = Math.ceil(Math.random() * $gameAtual.range);
+          const aleatorio = Math.ceil(Math.random() * $gameAtual.range);
           if (!$selectedNumber.some((element) => element === aleatorio)) {
             $selectedNumber.push(aleatorio);
           }
@@ -141,23 +208,6 @@
             b.classList.add("selected");
           }
         });
-      },
-      getInfoGame: function getInfoGame(type) {
-        var ajax = new XMLHttpRequest();
-        ajax.open("GET", "games.json");
-        ajax.send();
-        ajax.addEventListener(
-          "readystatechange",
-          function () {
-            if (ajax.readyState === 4 && ajax.status === 200) {
-              var response = JSON.parse(ajax.responseText);
-              $gameAtual = response.types[type];
-              $desc.get()[0].innerHTML = $gameAtual.description;
-              app().createFieldBet($gameAtual.range);
-            }
-          },
-          false
-        );
       },
     };
   }
