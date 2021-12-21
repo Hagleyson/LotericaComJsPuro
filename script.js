@@ -108,10 +108,11 @@
         const $p = doc.createElement("p");
         const $strong = doc.createElement("strong");
         const $span = doc.createElement("span");
-        $li.classList.add(app().addClass());
         $button.classList.add("far");
         $button.classList.add("fa-trash-alt");
         $button.classList.add("buttonDefault");
+        $button.style.borderColor = $gameAtual.color;
+        $strong.style.color = $gameAtual.color;
         $button.addEventListener(
           "click",
           function () {
@@ -164,18 +165,6 @@
         $h1.textContent = "Carrinho Vazio!!!";
         $li.appendChild($h1);
         return $li;
-      },
-      addClass: function () {
-        switch ($gameAtual.type) {
-          case "Lotofácil":
-            return "lotofacil";
-          case "Mega-Sena":
-            return "megaSena";
-          case "Quina":
-            return "lotomania";
-          default:
-            return "";
-        }
       },
       createFieldBet: function createFieldBet(range) {
         const $fragment = doc.createDocumentFragment();

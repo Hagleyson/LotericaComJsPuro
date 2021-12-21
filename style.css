@@ -3,7 +3,7 @@
   padding: 0px;
   border: 0px;
   box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Helvetica Neue";
 }
 :root {
   --title: #707070;
@@ -14,36 +14,54 @@
   --gold: #f79c31;
   --white: #ffffff;
   --ball: #adc0c4;
+  --trash: #888888;
+  --backgroundCard: #f4f4f4;
+  --borderCard: #e2e2e2;
+  --borderHeader: #ebebeb;
 }
 body {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
 }
 /*header*/
 header {
   width: 100%;
-  height: 60px;
-  grid-column: span 2;
+  height: 72px;
+  border-bottom: 2px solid var(--borderHeader);
+  opacity: 1;
   display: flex;
-  justify-content: space-between;
-  padding: 15px;
+  justify-content: center;
 }
-header > div {
+header > .containerHeader {
+  width: 80%;
+  height: 100%;
   display: flex;
-  padding: 10px;
+  padding: 15px;
+  justify-content: space-between;
+}
+header > .containerHeader div {
+  display: flex;
   align-items: center;
   justify-content: space-around;
 }
 .title {
-  display: inline;
+  text-align: center;
+  font: italic normal bold 44px/70px Helvetica Neue;
+  letter-spacing: 0px;
   color: var(--title);
-  border-bottom: 5px solid #b5c401;
-  font-weight: 400;
-  font-style: italic;
+  opacity: 1;
+  position: relative;
 }
-
+.title span {
+  position: absolute;
+  top: 65px;
+  left: -0;
+  width: 100%;
+  height: 7px;
+  border-radius: 6px;
+  background-color: var(--trace);
+}
 .linkMenu {
   display: inline;
   font-size: 16px;
@@ -57,11 +75,9 @@ header > div {
 
 .container {
   width: 80%;
-  height: calc(100vh - 60px);
-  max-height: calc(100vh - 60px);
   overflow: auto;
   display: grid;
-  grid-template-rows: calc(100vh - 60px);
+  grid-template-rows: calc(100vh - 72px);
   grid-template-columns: 60% 40%;
 }
 
@@ -73,18 +89,25 @@ aside {
 }
 /*Main*/
 main {
-  grid-template-rows: 60px 20px 60px 25px 50px 40% 80px;
+  grid-template-rows: 60px 55px 45px 45px 50px 50% 80px;
 }
 .titleMain {
   display: inline;
-  font-size: 20px;
+  font-size: 28px;
   color: var(--title);
   font-weight: bold;
   font-style: italic;
   padding: 10px 0;
+  text-transform: uppercase;
 }
 .titleMain > span {
   font-weight: lighter !important;
+}
+.subtitle {
+  font: italic normal bold 17px/70px Helvetica Neue;
+}
+.desc {
+  font: italic normal normal 17px/24px Helvetica Neue;
 }
 main > strong {
   color: var(--text);
@@ -113,7 +136,11 @@ main > p {
 }
 /*aside*/
 aside {
-  grid-template-rows: 90px auto 100px;
+  grid-template-rows: 90px auto 50px 105px;
+  background: var(--backgroundCard) 0% 0% no-repeat padding-box;
+  border: 1px solid var(--borderCard);
+  opacity: 1;
+  border-radius: 10px;
 }
 .card {
   overflow: auto;
@@ -125,9 +152,7 @@ aside {
 .card > li {
   display: grid;
   grid-template-columns: 50px 1fr;
-  grid-template-rows: 1fr 1fr;
-  height: 70px;
-  padding: 10px 0px;
+  grid-template-rows: 25px 50px;
 }
 .card > li > h1 {
   font-weight: 500;
@@ -135,7 +160,7 @@ aside {
 }
 .card > li > button {
   font-size: 30px;
-  grid-row: span 2;
+  grid-row: span 3;
   cursor: pointer;
   border-right-style: solid;
   border-right-width: 4px;
@@ -143,18 +168,33 @@ aside {
   border-radius: 4px;
   display: flex;
   align-items: center;
+  color: var(--trash);
 }
 .card > li > p {
   font-size: 15px;
   padding: 10px 0px 0px 5px;
   font-weight: 300;
+  font: italic normal bold 15px/20px Helvetica Neue;
+  color: var(--text);
 }
 .card > li > strong {
-  font-size: 10px;
-  padding-left: 9px;
+  font-size: 16px;
+  padding-left: 5px;
   font-weight: bold;
+  font-style: italic;
 }
-
+.card > li > strong > span {
+  font: normal normal normal 16px/70px Helvetica Neue;
+  color: var(--text);
+}
+.divButton {
+  width: 100%;
+  border-top: 1px solid var(--borderCard);
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .lotofacil > button {
   border-color: var(--purple);
 }
@@ -182,14 +222,14 @@ aside {
 }
 /*Botões*/
 
-.bottoes {
+.buttoes {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.bottoes > div {
+.buttoes > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -197,11 +237,13 @@ aside {
 }
 .buttonContainer {
   padding: 15px 0;
-  width: 390px;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+}
+.buttonContainer > button {
+  margin-right: 10px;
 }
 .button {
   border-width: 2px;
@@ -218,12 +260,13 @@ aside {
   height: 34px;
   font-style: italic;
 }
-.bottoesAction {
+.buttoesAction {
   padding: 20px;
   height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 16px;
 }
 
 .buttonType1 {
@@ -233,7 +276,7 @@ aside {
   display: flex;
 }
 
-.buttonType2 > span {
+.buttonType1 > span {
   margin-right: 10px;
   font-size: 15px;
 }
@@ -256,7 +299,7 @@ button:hover {
     max-height: auto;
   }
   main {
-    grid-template-rows: 90px 20px 60px 25px 80px 1fr 80px;
+    grid-template-rows: 90px 20px 60px 25px 80px 50% 80px;
   }
   .containerGames {
     grid-template-columns: repeat(10, 40px);
